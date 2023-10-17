@@ -41,7 +41,7 @@ public class Planificador {
                 newProcesos.add(temp.get(0));
                 dumpProcesos.remove(temp.get(0));
             } else {
-                exectime += 1;
+                exectime ++;
             }
         }
 
