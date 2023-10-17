@@ -9,12 +9,11 @@ public class Planificador {
     }
     public void pedirProcesos(){
         procesos.add(new MiProceso("pid_1", 6, 0));
-        procesos.add(new MiProceso("pid_2", 4, 2));
+        procesos.add(new MiProceso("pid_2", 4, 30));
         procesos.add(new MiProceso("pid_3", 2, 4));
-        procesos.add(new MiProceso("pid_4", 5, 6));
+        procesos.add(new MiProceso("pid_4", 5, 60));
     }
 
-    //ordenar la lista por orden de llegada
     public void planificarFCFS(){
         procesos.sort((MiProceso p1, MiProceso p2) -> p1.getLlegada() - p2.getLlegada());
     }
@@ -37,9 +36,13 @@ public class Planificador {
 
             temp.sort((MiProceso p1, MiProceso p2) -> p1.getEjecucion() - p2.getEjecucion());
 
-            exectime += temp.get(0).getEjecucion();
-            newProcesos.add(temp.get(0));
-            dumpProcesos.remove(temp.get(0));
+            if (temp.size() > 0) {
+                exectime += temp.get(0).getEjecucion();
+                newProcesos.add(temp.get(0));
+                dumpProcesos.remove(temp.get(0));
+            } else {
+                exectime += 1;
+            }
         }
 
         procesos = newProcesos;
