@@ -1,17 +1,33 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Planificador {
+    private static int PROCESS_ID = 0;
 
     public ArrayList<MiProceso> procesos;
 
     public Planificador(){
         this.procesos = new ArrayList<>();
     }
+
     public void pedirProcesos(){
-        procesos.add(new MiProceso("pid_1", 6, 0));
-        procesos.add(new MiProceso("pid_2", 4, 30));
-        procesos.add(new MiProceso("pid_3", 2, 4));
-        procesos.add(new MiProceso("pid_4", 5, 60));
+        Scanner sc = new Scanner(System.in);
+
+        int inTime = -1;
+        int execTime = -1;
+
+        do {
+            System.out.print("Ingrese el tiempo de llegada del proceso (-1 para cancelar): ");
+            inTime = sc.nextInt();
+            System.out.print("Ingrese el tiempo de ejecucion del proceso (-1 para cancelar): ");
+            execTime = sc.nextInt();
+            if (inTime >= 0 && execTime >= 0) {
+                PROCESS_ID++;
+                procesos.add(new MiProceso("pid_" + PROCESS_ID, execTime, inTime));
+            }
+        } while (inTime >= 0 && execTime >= 0);
+
+        sc.close();
     }
 
     public void planificarFCFS(){
@@ -48,19 +64,10 @@ public class Planificador {
         procesos = newProcesos;
     }
 
-    public void showProcesos(){
-        System.out.println("ID       LLEGADA   EJECUCION");
-        System.out.println("--------------------------------");
-        for (MiProceso proc : procesos) {
-            System.out.println(proc.getNombre() + "       " + proc.getLlegada() + "          " + proc.getEjecucion());
-        }
-    }
-
     public void simulacion(){
         String command = "java";
         String mainClass = "MiProceso";
         for (MiProceso proc : procesos) {
-            //Este es el que va a lanzar los procesos
             
             String tiempoEjec = proc.getEjecucion()+"";
             ProcessBuilder processBuilder = new ProcessBuilder(command, mainClass, tiempoEjec);
@@ -82,14 +89,11 @@ public class Planificador {
         Planificador p = new Planificador();
 
         p.pedirProcesos();
-        // p.planificarFCFS();
-        // System.out.println("SIMULANDO CON FCFS");
-        // p.simulacion();
+        p.planificarFCFS();
+        System.out.println("SIMULANDO CON FCFS");
+        p.simulacion();
         p.planificarSJF();
-        p.showProcesos();
-        // System.out.println("SIMULANDO CON SJF");
-        // p.simulacion();
-
-        
+        System.out.println("SIMULANDO CON SJF");
+        p.simulacion();
     }
 }
