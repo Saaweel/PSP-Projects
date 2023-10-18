@@ -13,17 +13,17 @@ public class Planificador {
     public void pedirProcesos(){
         Scanner sc = new Scanner(System.in);
 
-        int inTime = -1;
         int execTime = -1;
+        int inTime = -1;
 
         do {
-            System.out.print("Ingrese el tiempo de llegada del proceso (-1 para cancelar): ");
-            inTime = sc.nextInt();
             System.out.print("Ingrese el tiempo de ejecucion del proceso (-1 para cancelar): ");
             execTime = sc.nextInt();
+            System.out.print("Ingrese el tiempo de llegada del proceso (-1 para cancelar): ");
+            inTime = sc.nextInt();
             if (inTime >= 0 && execTime >= 0) {
-                PROCESS_ID++;
                 procesos.add(new MiProceso("pid_" + PROCESS_ID, execTime, inTime));
+                PROCESS_ID++;
             }
         } while (inTime >= 0 && execTime >= 0);
 
@@ -57,11 +57,18 @@ public class Planificador {
                 newProcesos.add(temp.get(0));
                 dumpProcesos.remove(temp.get(0));
             } else {
-                exectime ++;
+                exectime++;
             }
         }
 
         procesos = newProcesos;
+    }
+
+    public void showProcess(){
+        System.out.println("PID\tT. Ejecucion\tT. Llegada");
+        for (MiProceso proc : procesos) {
+            System.out.println(proc.getNombre() + "\t\t" + proc.getLlegada() + "\t\t" + proc.getEjecucion());
+        }
     }
 
     public void simulacion(){
@@ -89,11 +96,14 @@ public class Planificador {
         Planificador p = new Planificador();
 
         p.pedirProcesos();
-        p.planificarFCFS();
+        p.showProcess();
         System.out.println("SIMULANDO CON FCFS");
+        p.planificarFCFS();
+        p.showProcess();
         p.simulacion();
-        p.planificarSJF();
         System.out.println("SIMULANDO CON SJF");
+        p.planificarSJF();
+        p.showProcess();
         p.simulacion();
     }
 }
