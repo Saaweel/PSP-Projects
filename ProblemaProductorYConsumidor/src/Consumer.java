@@ -20,14 +20,13 @@ public class Consumer implements Runnable {
     }
 
     public synchronized void consume() throws InterruptedException {
-        if (this.products.size() == 0) {
+        while (this.products.size() == 0) {
             this.wait();
         }
 
         this.products.remove(0);
         System.out.println("Consumidor consume");
 
-        if (this.products.size() == 1)
-            this.notify();
+        this.notify();
     }
 }

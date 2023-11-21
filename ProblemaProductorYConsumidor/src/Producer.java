@@ -22,14 +22,13 @@ public class Producer implements Runnable {
     }
 
     public synchronized void produce() throws InterruptedException {
-        if (this.products.size() == this.maxStock) {
+        while (this.products.size() == this.maxStock) {
             this.wait();
         }
 
         this.products.add(1);
         System.out.println("Productor produce");
 
-        if (this.products.size() == this.maxStock - 1)
-            this.notify();
+        this.notify();
     }
 }
