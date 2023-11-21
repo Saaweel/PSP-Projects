@@ -9,6 +9,8 @@ public class BarberShop {
     }
 
     public synchronized void newClient(String nombre) {
+        System.out.println("Llega " + nombre);
+        
         if (this.availableChairs > 0) {
             this.availableChairs--;
 
