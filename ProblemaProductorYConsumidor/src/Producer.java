@@ -14,7 +14,7 @@ public class Producer implements Runnable {
         while (true) {
             try {
                 this.produce();
-                Thread.sleep(new Random().nextInt(350) + 500); // Que produzca un POCO mas rapido
+                Thread.sleep(new Random().nextInt(500) + 500); // Que produzca un POCO mas rapido
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

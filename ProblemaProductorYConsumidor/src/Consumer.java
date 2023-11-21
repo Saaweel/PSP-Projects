@@ -12,7 +12,7 @@ public class Consumer implements Runnable {
         while (true) {
             try {
                 this.consume();
-                Thread.sleep(new Random().nextInt(500) + 500);
+                Thread.sleep(new Random().nextInt(250) + 500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
