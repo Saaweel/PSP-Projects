@@ -1,35 +1,46 @@
 public class BarberShop {
-    private boolean sleeping = true;
+    private int availableChairs;
 
-    private int availabeChairs;
+    private final int CHAIRS;
 
-    private final int CHAIRS = 5;
+    public BarberShop(int maxChairs) {
+        this.CHAIRS = maxChairs;
+        this.availableChairs = maxChairs;
+    }
 
-    public synchronized void newClient() {
-       
+    public synchronized void newClient(String nombre) {
+        if (this.availableChairs > 0) {
+            this.availableChairs--;
+
+            if (this.availableChairs == CHAIRS - 1) {
+                System.out.println("El " + nombre + " despierta al barbero");
+                notify();
+            }
+        } else {
+            System.out.println("El " + nombre + " se pira, no hay sitio");
+        }
     }
 
     public synchronized void nextClient() {
+        while (this.availableChairs < this.CHAIRS) {
+            this.availableChairs++;
+            System.out.println("Barbero pela");
+        }
 
-    }
+        System.out.println("Barbero se duerme");
 
-    public boolean isSleeping() {
-        return sleeping;
-    }
-
-    public void setSleeping(boolean sleeping) {
-        this.sleeping = sleeping;
-    }
-
-    public int getAvailabeChairs() {
-        return availabeChairs;
-    }
-
-    public void setAvailabeChairs(int availabeChairs) {
-        this.availabeChairs = availabeChairs;
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getCHAIRS() {
-        return CHAIRS;
+        return this.CHAIRS;
+    }
+
+    public int getAvailableChairs() {
+        return this.availableChairs;
     }
 }
