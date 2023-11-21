@@ -7,14 +7,6 @@ class Customer implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            barbershop.llegaCliente();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        
     }
 }

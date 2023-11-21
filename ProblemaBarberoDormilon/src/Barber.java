@@ -7,8 +7,6 @@ class Barber implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            barbershop.siguienteCliente();
-        }
+        
     }
 }

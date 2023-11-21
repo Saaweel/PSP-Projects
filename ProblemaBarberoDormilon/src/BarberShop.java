@@ -1,41 +1,35 @@
 public class BarberShop {
     private boolean sleeping = true;
 
-    public synchronized void llegaCliente() {
-        System.out.println("Cliente llega a la barbería");
+    private int availabeChairs;
 
-        if (sleeping) {
-            sleeping = false;
+    private final int CHAIRS = 5;
 
-            System.out.println("Barbero dormido. Despierta al barbero.");
-
-            notify();
-        } else {
-            System.out.println("Barbero ocupado. Cliente espera");
-
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public synchronized void newClient() {
+       
     }
 
-    public synchronized void siguienteCliente() {
-        System.out.println("Atendiendo a un cliente");
+    public synchronized void nextClient() {
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    }
 
-        System.out.println("Corte de pelo completado");
-        
-        if (!sleeping) {
-            sleeping = true;
-            System.out.println("Barbero vuelve a dormir");
-            notify();
-        }
+    public boolean isSleeping() {
+        return sleeping;
+    }
+
+    public void setSleeping(boolean sleeping) {
+        this.sleeping = sleeping;
+    }
+
+    public int getAvailabeChairs() {
+        return availabeChairs;
+    }
+
+    public void setAvailabeChairs(int availabeChairs) {
+        this.availabeChairs = availabeChairs;
+    }
+
+    public int getCHAIRS() {
+        return CHAIRS;
     }
 }
